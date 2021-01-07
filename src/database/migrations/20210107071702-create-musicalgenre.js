@@ -1,27 +1,29 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Musicalgenres', {
+    await queryInterface.createTable("Musicalgenres", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        default: Sequelize.fn("uuid_generate_v4"),
       },
       name: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
+        type: Sequelize.STRING(50),
         allowNull: false,
-        type: Sequelize.DATE
+        unique: true,
+        len: [3, 50],
       },
-      updatedAt: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Musicalgenres');
-  }
+    await queryInterface.dropTable("Musicalgenres");
+  },
 };
