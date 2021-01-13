@@ -4,7 +4,11 @@ const { BadRequestError } = require("../helpers/errors");
 
 const clubsController = {
   getAllClubs: async () => {
-    const clubsFound = await Club.findAll();
+    const clubsFound = await Club.findAll({
+      order: [["name", "ASC"]],
+      attributes: ["name", "id"],
+      raw: true,
+    });
     // console.log("tous les clubs", clubsFound);
     if (clubsFound.length <= 0) {
       throw new NotFoundError(
